@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ckan-config
+data:
+  # Host Ports
+  CKAN_PORT_HOST: "5000"
+  
+  # CKAN Databases
+  POSTGRES_HOST: "ckan-db-primary"
+  CKAN_SQLALCHEMY_URL: "postgresql://ckandbuser:ckandbpassword@ckan-db-primary.aafc-labs-can-dev.svc:5432/ckandb"
+  CKAN_DATASTORE_WRITE_URL: "postgresql://ckandbuser:ckandbpassword@ckan-db-primary.aafc-labs-can-dev.svc:5432/datastore"
+  CKAN_DATASTORE_READ_URL: "postgresql://datastore:datastore@ckan-db-primary.aafc-labs-can-dev.svc:5432/datastore"
+
+  # Test Database Connections
+  TEST_CKAN_SQLALCHEMY_URL: "postgresql://ckan:ckan@ckan-db-primary.aafc-labs-can-dev.svc:5432/ckan_test"
+  TEST_CKAN_DATASTORE_WRITE_URL: "postgresql://ckan:ckan@ckan-db-primary.aafc-labs-can-dev.svc:5432/datastore_test"
+  TEST_CKAN_DATASTORE_READ_URL: "postgresql://datastore:datastore@ckan-db-primary.aafc-labs-can-dev.svc:5432/datastore_test"
+
+  # Dev Settings
+  USE_HTTPS_FOR_DEV: "false"
+  
+  # CKAN Core
+  CKAN_VERSION: "2.11.0"
+  CKAN_SITE_ID: "default"
+  CKAN_SITE_URL: "https://ckan-aafc-labs-can-dev.apps.edcm-science-ocp-ops1.science.gc.ca"
+  CKAN___BEAKER__SESSION__SECRET: "CHANGE_ME"
+  CKAN___API_TOKEN__JWT__ENCODE__SECRET: "string:CHANGE_ME"
+  CKAN___API_TOKEN__JWT__DECODE__SECRET: "string:CHANGE_ME"
+  CKAN_SYSADMIN_EMAIL: "your_email@example.com"
+  CKAN_STORAGE_PATH: "/var/lib/ckan"
+  CKAN_MAX_UPLOAD_SIZE_MB: "100"
+  TZ: "UTC"
+  
+  # Solr
+  SOLR_IMAGE_VERSION: "2.10-solr9"
+  CKAN_SOLR_URL: "http://ckan-solr:8983/solr/ckan"
+  TEST_CKAN_SOLR_URL: "http://ckan-solr:8983/solr/ckan"
+
+  # Redis
+  REDIS_VERSION: "6"
+  CKAN_REDIS_URL: "redis://ckan-redis:6379/1"
+  TEST_CKAN_REDIS_URL: "redis://ckan-redis:6379/1"
+
+  # Extensions
+  CKAN__PLUGINS: "image_view text_view datatables_view csa scheming_datasets fluent datastore xloader envvars"
+  CKAN__HARVEST__MQ__TYPE: "redis"
+  CKAN__HARVEST__MQ__HOSTNAME: "ckan-redis"
+  CKAN__HARVEST__MQ__PORT: "6379"
+  CKAN__HARVEST__MQ__REDIS_DB: "1"
+  
+  # SSL (used by Python libraries)
+  REQUESTS_CA_BUNDLE: "/srv/app/ca-certs/ca-bundle.crt"
+  CURL_CA_BUNDLE: "/srv/app/ca-certs/ca-bundle.crt"
+  

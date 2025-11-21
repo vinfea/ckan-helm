@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ckan-solr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ckan-solr
+  template:
+    metadata:
+      labels:
+        app: ckan-solr
+    spec:
+      containers:
+        - name: solr
+          image: ckan/ckan-solr:2.10-solr9
+          ports:
+            - containerPort: 8983
+          volumeMounts:
+            - name: ckan-solr-data
+              mountPath: /var/solr
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+      volumes:
+        - name: ckan-solr-data
+          persistentVolumeClaim:
+            claimName: ckan-solr-data
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ckan-solr
+  labels:
+    app: ckan-solr
+spec:
+  ports:
+    - name: solr
+      port: 8983          # The port the service exposes internally
+      targetPort: 8983    # Must match the Solr container port
+  selector:
+    app: ckan-solr

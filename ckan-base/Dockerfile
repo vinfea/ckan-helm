@@ -15,10 +15,6 @@ RUN pip3 install -U pip && \
     pip3 install -r ckanext-xloader/requirements.txt && \
     pip3 install -U requests[security]
 
-# You need to run this. Idk why, but trust me, if you don't,
-# bad things will happen.
-RUN apt-get update
-
 # Copy custom initialization scripts
 COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/
 
